@@ -1,0 +1,72 @@
+\documentclass[10pt]{article}
+
+\usepackage[letterpaper,margin=0.68in]{geometry}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[table]{xcolor}
+\usepackage{booktabs}
+\usepackage{array}
+\usepackage{microtype}
+\usepackage{parskip}
+
+% Replace the partner name before submitting.
+\newcommand{\partnername}{Daniel Kim}
+
+\definecolor{vtmaroon}{HTML}{861F41}
+\definecolor{lightgray}{HTML}{F3F3F3}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\renewcommand{\arraystretch}{1.14}
+\pagestyle{empty}
+
+\begin{document}
+
+{\LARGE\bfseries LiDAR Sensor Evaluation}\par
+\vspace{0.25em}
+{\color{vtmaroon}\large Lab 1 Findings and Recommendation}\par
+
+\vspace{0.85em}
+\begin{tabular}{@{}>{\bfseries}p{0.75in}p{5.9in}@{}}
+To: & Professor Courtney Kyger \\
+From: & Aurlun Nelson and \partnername \\
+Date: & October 2, 2026 \\
+Subject: & Selection of a LiDAR sensor for autonomous vehicle distance measurement \\
+\end{tabular}
+
+\vspace{0.75em}
+Professor Kyger,
+
+Our group, Aurlun Nelson and \partnername, evaluated two LiDAR sensors for distance measurement on an autonomous vehicle. We analyzed 25 readings from each sensor at true stopping distances of 5, 10, and 15 ft from a wall. Because the vehicle requires both accurate and consistent distance measurements, we compared each sample mean with the true distance, used the sample standard deviation to assess precision, performed two-sided one-sample t-tests at $\alpha=0.05$, and ran a Monte Carlo simulation to estimate how often both sensors would report a distance at least 0.5 ft too short.
+
+The descriptive statistics and hypothesis-test results are summarized below. Each test used $H_0:\mu=d_{\mathrm{true}}$ and $H_a:\mu\neq d_{\mathrm{true}}$ with 24 degrees of freedom. Sensor 1 produced means of 5.1496, 10.0097, and 14.9006 ft, while Sensor 2 produced means of 4.9271, 10.1314, and 15.1208 ft. At the 5-ft distance, Sensor 1 differed significantly from the truth ($p=0.0334$), while Sensor 2 did not ($p=0.2127$). At 10 ft, Sensor 1 did not differ significantly ($p=0.8214$), while Sensor 2 did ($p=0.0100$). At 15 ft, Sensor 1 did not differ significantly ($p=0.0940$), while Sensor 2 did ($p=0.0233$).
+
+\begin{center}
+\small
+\rowcolors{2}{lightgray}{white}
+\begin{tabular}{ccrrrrl}
+\rowcolor{vtmaroon}
+\color{white}\bfseries Sensor &
+\color{white}\bfseries Distance &
+\color{white}\bfseries Mean &
+\color{white}\bfseries Std. dev. &
+\color{white}\bfseries $t$ &
+\color{white}\bfseries $p$ &
+\color{white}\bfseries Decision \\
+1 & 5 ft  & 5.1496  & 0.3316 &  2.2564 & 0.0334 & Reject $H_0$ \\
+1 & 10 ft & 10.0097 & 0.2119 &  0.2282 & 0.8214 & Fail to reject $H_0$ \\
+1 & 15 ft & 14.9006 & 0.2850 & $-1.7437$ & 0.0940 & Fail to reject $H_0$ \\
+2 & 5 ft  & 4.9271  & 0.2848 & $-1.2803$ & 0.2127 & Fail to reject $H_0$ \\
+2 & 10 ft & 10.1314 & 0.2350 &  2.7960 & 0.0100 & Reject $H_0$ \\
+2 & 15 ft & 15.1208 & 0.2492 &  2.4231 & 0.0233 & Reject $H_0$ \\
+\end{tabular}
+\end{center}
+
+The Lilliefors tests did not reject normality for five of the six groups. Sensor 2 at 10 ft rejected normality ($p=0.0089$), so we interpret that t-test cautiously. In 1,000,000 simulated trials per distance, both sensors read at least 0.5 ft too short in 0.1687\% of the 5-ft trials, 0.0031\% of the 10-ft trials, and 0.0476\% of the 15-ft trials. We recommend \textbf{Sensor 1}. Its mean was closer to the true distance at 10 and 15 ft, and its measurements failed to show a significant difference from truth at two of the three distances. Sensor 2 was more precise at 5 and 15 ft, but its mean significantly overestimated the distance at 10 and 15 ft, which is less desirable for detecting obstacles. The probability that both sensors simultaneously read too close remained below 0.17\% at every tested distance.
+
+\vspace{0.65em}
+Sincerely,\\
+Aurlun Nelson\\
+\partnername
+
+\end{document}
